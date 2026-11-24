@@ -1,0 +1,158 @@
+window.DICTIONARY_CATALOG = {
+  "languages": [
+    {
+      "code": "en",
+      "name": "English (US & UK)",
+      "nativeName": "English",
+      "diacriticFold": false,
+      "builtIn": true,
+      "wordCount": 260137,
+      "formCount": 265986,
+      "sizeBytes": 2753890,
+      "url": "./dictionaries/en.txt"
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "nativeName": "Deutsch",
+      "diacriticFold": false,
+      "builtIn": false,
+      "wordCount": 332060,
+      "formCount": 341425,
+      "sizeBytes": 4514146,
+      "url": "./dictionaries/de.txt"
+    },
+    {
+      "code": "fr",
+      "name": "French",
+      "nativeName": "Français",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 286309,
+      "formCount": 323916,
+      "sizeBytes": 3804551,
+      "url": "./dictionaries/fr.txt"
+    },
+    {
+      "code": "es",
+      "name": "Spanish",
+      "nativeName": "Español",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 314467,
+      "formCount": 314683,
+      "sizeBytes": 3655688,
+      "url": "./dictionaries/es.txt"
+    },
+    {
+      "code": "it",
+      "name": "Italian",
+      "nativeName": "Italiano",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 194107,
+      "formCount": 375194,
+      "sizeBytes": 6027128,
+      "url": "./dictionaries/it.txt"
+    },
+    {
+      "code": "pt",
+      "name": "Portuguese",
+      "nativeName": "Português",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 823570,
+      "formCount": 824858,
+      "sizeBytes": 11253646,
+      "url": "./dictionaries/pt.txt"
+    },
+    {
+      "code": "nl",
+      "name": "Dutch",
+      "nativeName": "Nederlands",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 321695,
+      "formCount": 324931,
+      "sizeBytes": 3791368,
+      "url": "./dictionaries/nl.txt"
+    },
+    {
+      "code": "pl",
+      "name": "Polish",
+      "nativeName": "Polski",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 622672,
+      "formCount": 634256,
+      "sizeBytes": 7753496,
+      "url": "./dictionaries/pl.txt"
+    },
+    {
+      "code": "ru",
+      "name": "Russian",
+      "nativeName": "Русский",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 432771,
+      "formCount": 432952,
+      "sizeBytes": 9568095,
+      "url": "./dictionaries/ru.txt"
+    },
+    {
+      "code": "el",
+      "name": "Greek",
+      "nativeName": "Ελληνικά",
+      "diacriticFold": true,
+      "builtIn": false,
+      "wordCount": 826887,
+      "formCount": 828806,
+      "sizeBytes": 19421959,
+      "url": "./dictionaries/el.txt"
+    },
+    {
+      "code": "zh",
+      "name": "Mandarin Chinese",
+      "nativeName": "中文",
+      "diacriticFold": false,
+      "builtIn": false,
+      "wordCount": 120000,
+      "formCount": 120000,
+      "sizeBytes": 970616,
+      "url": "./dictionaries/zh.txt"
+    },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "nativeName": "日本語",
+      "diacriticFold": false,
+      "builtIn": false,
+      "wordCount": 33377,
+      "formCount": 33377,
+      "sizeBytes": 308653,
+      "url": "./dictionaries/ja.txt"
+    },
+    {
+      "code": "ko",
+      "name": "Korean",
+      "nativeName": "한국어",
+      "diacriticFold": false,
+      "builtIn": false,
+      "wordCount": 49313,
+      "formCount": 49313,
+      "sizeBytes": 532966,
+      "url": "./dictionaries/ko.txt"
+    },
+    {
+      "code": "bn",
+      "name": "Bengali",
+      "nativeName": "বাংলা",
+      "diacriticFold": false,
+      "builtIn": false,
+      "wordCount": 286687,
+      "formCount": 286687,
+      "sizeBytes": 8847354,
+      "url": "./dictionaries/bn.txt"
+    }
+  ]
+};

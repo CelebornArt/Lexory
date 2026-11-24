@@ -1,0 +1,20 @@
+{
+  "name": "lexory",
+  "version": "1.0.0",
+  "description": "Lexory — Minimalist word-memory and vocabulary app with curated offline dictionaries, timer cache, PWA, Android APK, and Tauri PC build.",
+  "scripts": {
+    "build:dicts": "node scripts/build-dictionaries.mjs",
+    "build:icons": "node scripts/generate-icons.mjs",
+    "dev": "npx serve www -l 4173",
+    "cap:sync": "npx cap sync android && node scripts/strip-native-dicts.mjs",
+    "android:apk": "cd android && gradlew.bat assembleDebug",
+    "pc:start": "npx tauri dev",
+    "pc:build": "npx tauri build"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@tauri-apps/cli": "^2.12.6"
+  }
+}

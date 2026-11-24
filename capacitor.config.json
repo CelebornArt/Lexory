@@ -1,0 +1,8 @@
+{
+  "appId": "com.wordcollector.app",
+  "appName": "Lexory",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}

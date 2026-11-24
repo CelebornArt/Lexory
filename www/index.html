@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#fafafa" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Lexory</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div id="timer-wrap" class="timer-wrap">
+      <div class="timer-pill" id="timer-pill" data-state="idle">
+        <button
+          id="timer-toggle-btn"
+          class="timer-btn"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="timer-popover"
+        >
+          <svg class="info-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="13" r="8"></circle>
+            <polyline points="12 9 12 13 14.5 14.5"></polyline>
+            <line x1="9" y1="2" x2="15" y2="2"></line>
+          </svg>
+          <span id="timer-label" class="timer-label">Timer</span>
+        </button>
+        <div id="timer-active-actions" class="timer-active-actions" hidden>
+          <button id="timer-pause-btn" class="timer-mini-btn" type="button" aria-label="Pause timer">
+            <svg id="timer-pause-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+              <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+            </svg>
+            <svg id="timer-play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
+              <polygon points="7 5 19 12 7 19 7 5"></polygon>
+            </svg>
+          </button>
+          <button id="timer-stop-btn" class="timer-mini-btn" type="button" aria-label="Stop timer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="timer-popover" class="timer-popover" role="menu" aria-label="Select timer duration" hidden>
+        <p id="timer-popover-title" class="timer-popover__title">Select duration</p>
+        <div class="timer-presets">
+          <button class="timer-preset-btn" type="button" data-seconds="30">30s</button>
+          <button class="timer-preset-btn" type="button" data-seconds="60">1m</button>
+          <button class="timer-preset-btn" type="button" data-seconds="120">2m</button>
+          <button class="timer-preset-btn" type="button" data-seconds="180">3m</button>
+          <button class="timer-preset-btn" type="button" data-seconds="300">5m</button>
+          <button class="timer-preset-btn" type="button" data-seconds="600">10m</button>
+        </div>
+      </div>
+    </div>
+
+      <button
+        id="listen-toggle-btn"
+        class="listen-btn"
+        type="button"
+        aria-pressed="false"
+        data-state="idle"
+        hidden
+      >
+        <span class="listen-btn__dot" aria-hidden="true"></span>
+        <svg class="info-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="22"></line>
+        </svg>
+        <span id="listen-btn-label">Listen</span>
+      </button>
+    </div>
+
+    <div id="quick-lang-bar" class="quick-lang-bar" role="group" aria-label="Dictionary quick switch"></div>
+
+    <div class="topbar-right">
+      <button
+        id="open-info-btn"
+        class="info-btn"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="info-drawer"
+      >
+        <svg class="info-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <circle cx="3.5" cy="6" r="1"></circle>
+          <circle cx="3.5" cy="12" r="1"></circle>
+          <circle cx="3.5" cy="18" r="1"></circle>
+        </svg>
+        <span id="open-info-label">Word List</span>
+        <span id="header-word-badge" class="info-btn__badge">0</span>
+      </button>
+
+      <button
+        id="open-settings-btn"
+        class="info-btn info-btn--icon-only"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="settings-modal"
+        aria-label="Settings"
+        title="Settings"
+      >
+        <svg class="info-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section id="composer-panel" class="composer" aria-label="Word input">
+      <div id="timer-mode-pill" class="mode-pill" hidden>Timer Cache</div>
+
+      <div id="input-shell" class="input-shell">
+        <input
+          id="word-input"
+          class="word-input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="Type a word …"
+          aria-label="Type a word and confirm with Enter or Space"
+          autofocus
+        />
+        <span
+          id="status-circle"
+          class="status-circle"
+          data-state="idle"
+          role="status"
+          aria-live="polite"
+          aria-label="Ready"
+          title="Entry status"
+        ></span>
+      </div>
+
+      <div class="feedback-row" aria-live="polite">
+        <span id="feedback-text" class="feedback-text"></span>
+        <button
+          id="force-accept-btn"
+          class="force-btn"
+          type="button"
+          hidden
+        >
+          Force accept
+        </button>
+      </div>
+
+      <div class="counters" aria-label="Statistics">
+        <div class="counter-item">
+          <span id="total-words-label" class="counter-label">Words in system</span>
+          <span id="total-words-count" class="counter-value">0</span>
+        </div>
+        <span class="counter-divider" aria-hidden="true"></span>
+        <div class="counter-item">
+          <span id="duplicate-words-label" class="counter-label">Repeated entries</span>
+          <span id="duplicate-words-count" class="counter-value">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="timer-result-panel" class="result-card" aria-label="Timer round result" hidden>
+      <div class="result-card__header">
+        <div>
+          <h2 id="timer-result-title" class="result-card__title">Time's up</h2>
+          <p id="timer-result-subtitle" class="result-card__subtitle">Your timed round is complete.</p>
+        </div>
+      </div>
+
+      <div class="result-card__stats">
+        <div class="stat-box">
+          <span id="result-words-label" class="stat-box__label">Words in round</span>
+          <strong id="result-words-count" class="stat-box__value">0</strong>
+        </div>
+        <div class="stat-box">
+          <span id="result-duplicates-label" class="stat-box__label">Repeated entries</span>
+          <strong id="result-duplicates-count" class="stat-box__value">0</strong>
+        </div>
+      </div>
+
+      <div class="result-card__list-wrap">
+        <ol id="timer-result-list" class="word-list"></ol>
+        <p id="timer-result-empty" class="empty-state">No words entered during this timer round.</p>
+      </div>
+
+      <div class="result-card__actions">
+        <button id="timer-download-txt-btn" class="secondary-btn" type="button">Download (.txt)</button>
+        <button id="timer-download-json-btn" class="secondary-btn" type="button">Download (.json)</button>
+        <button id="timer-new-btn" class="secondary-btn" type="button">New Timer</button>
+        <button id="timer-back-main-btn" class="primary-btn" type="button">Back to Main Mode</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+
+  <aside
+    id="info-drawer"
+    class="drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="drawer-title"
+    hidden
+  >
+    <div class="drawer__header">
+      <div>
+        <h2 id="drawer-title" class="drawer__title">Word List &amp; Info</h2>
+        <p id="drawer-subtitle" class="drawer__subtitle">0 words in entry order</p>
+      </div>
+      <button id="close-info-btn" class="icon-btn" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="drawer__stats">
+      <div class="stat-box">
+        <span id="drawer-stat-total-label" class="stat-box__label">In system</span>
+        <strong id="drawer-total-count" class="stat-box__value">0</strong>
+      </div>
+      <div class="stat-box">
+        <span id="drawer-stat-dup-label" class="stat-box__label">Repeated</span>
+        <strong id="drawer-duplicate-count" class="stat-box__value">0</strong>
+      </div>
+      <div class="stat-box">
+        <span id="drawer-stat-dict-label" class="stat-box__label">Dictionary</span>
+        <strong id="drawer-dict-count" class="stat-box__value">0</strong>
+      </div>
+    </div>
+
+    <div class="drawer__controls">
+      <input
+        id="list-search-input"
+        class="drawer__search"
+        type="search"
+        placeholder="Filter list …"
+        aria-label="Filter saved words"
+      />
+      <button
+        id="sort-mode-btn"
+        class="sort-btn"
+        type="button"
+        aria-label="Sort: Order"
+      >
+        <svg class="sort-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="7" x2="14" y2="7"></line>
+          <line x1="4" y1="12" x2="11" y2="12"></line>
+          <line x1="4" y1="17" x2="8" y2="17"></line>
+          <polyline points="16 15 19 18 22 15"></polyline>
+          <line x1="19" y1="6" x2="19" y2="18"></line>
+        </svg>
+        <span id="sort-mode-label">Order</span>
+      </button>
+    </div>
+
+    <div class="drawer__body">
+      <ol id="word-list" class="word-list"></ol>
+      <p id="empty-list-state" class="empty-state">No words saved yet.</p>
+    </div>
+
+    <div class="drawer__footer">
+      <div class="drawer__actions">
+        <button id="export-btn" class="secondary-btn" type="button">Export JSON</button>
+        <label class="secondary-btn file-btn">
+          <span id="import-btn-label">Import JSON</span>
+          <input id="import-input" type="file" accept="application/json,.json" hidden />
+        </label>
+        <button id="reset-btn" class="danger-btn" type="button">Reset list</button>
+      </div>
+    </div>
+  </aside>
+
+  <div id="modal-backdrop" class="modal-backdrop" hidden></div>
+
+  <div
+    id="reset-modal"
+    class="modal-card"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="reset-modal-title"
+    aria-describedby="reset-modal-desc"
+    hidden
+  >
+    <h3 id="reset-modal-title" class="modal-card__title">Reset word list?</h3>
+    <p id="reset-modal-desc" class="modal-card__desc">
+      Do you really want to permanently delete all saved words and counters?
+    </p>
+    <div class="modal-card__actions">
+      <button id="reset-cancel-btn" class="secondary-btn" type="button">Cancel</button>
+      <button id="reset-confirm-btn" class="danger-btn danger-btn--solid" type="button">Yes, reset</button>
+    </div>
+  </div>
+
+  <div
+    id="settings-modal"
+    class="modal-card modal-card--settings"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="settings-modal-title"
+    hidden
+  >
+    <div class="modal-card__header">
+      <h3 id="settings-modal-title" class="modal-card__title">Settings</h3>
+      <button id="settings-close-btn" class="icon-btn" type="button" aria-label="Close settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-body">
+      <div class="setting-row">
+        <div>
+          <label id="app-lang-label" class="setting-label" for="app-language-select">App Language</label>
+          <p id="app-lang-hint" class="setting-hint">Auto-detects device language (English fallback).</p>
+        </div>
+        <select id="app-language-select" class="setting-select"></select>
+      </div>
+
+      <div class="setting-block">
+        <div class="setting-block__head">
+          <div>
+            <strong id="dict-section-title" class="setting-label">Dictionary Languages</strong>
+            <p id="dict-section-hint" class="setting-hint">Download offline dictionaries. Each language keeps its own separate save.</p>
+          </div>
+        </div>
+        <p id="dict-error-banner" class="setting-error" hidden></p>
+        <div id="dict-list" class="dict-list"></div>
+      </div>
+
+      <div class="setting-block">
+        <div>
+          <strong id="quick-section-title" class="setting-label">Quick-Switch Languages</strong>
+          <p id="quick-section-hint" class="setting-hint">Choose which installed languages appear in the main bar.</p>
+        </div>
+        <div id="quick-options-list" class="quick-options-list"></div>
+      </div>
+
+      <div id="voice-settings-block" class="setting-block" hidden>
+        <div>
+          <strong id="voice-section-title" class="setting-label">Voice Input (Listen)</strong>
+          <p id="voice-section-hint" class="setting-hint">Uses built-in microphone so headphone music stays full quality.</p>
+        </div>
+
+        <label class="voice-toggle-row">
+          <div>
+            <span id="audio-feedback-label" class="voice-toggle-row__title">Audio feedback tones</span>
+            <p id="audio-feedback-hint" class="setting-hint">Plays short cues for New / Duplicate. Auto-muted while music plays.</p>
+          </div>
+          <input id="audio-feedback-toggle" type="checkbox" class="voice-switch" />
+        </label>
+
+        <div id="voice-model-row" class="dict-row" hidden>
+          <div class="dict-row__info">
+            <div class="dict-row__name">
+              <span id="voice-model-label">Offline Voice Model (Whisper-Tiny)</span>
+            </div>
+            <div id="voice-model-status" class="dict-row__meta">Not downloaded (~99 MB)</div>
+          </div>
+          <div class="dict-row__actions">
+            <button id="voice-model-dl-btn" class="dict-btn" type="button">Download</button>
+            <button id="voice-model-rm-btn" class="dict-btn dict-btn--danger" type="button" hidden>Remove</button>
+          </div>
+        </div>
+        <p id="voice-error-banner" class="setting-error" hidden></p>
+      </div>
+
+      <div class="setting-note">
+        <strong id="dict-note-title">Dictionaries &amp; Credits</strong>
+        <p id="dict-note-text"></p>
+        <div class="credits-links">
+          <a href="https://github.com/CelebornArt/Lexory" target="_blank" rel="noopener noreferrer">Lexory GitHub</a>
+          <span>·</span>
+          <a href="https://github.com/LibreOffice/dictionaries" target="_blank" rel="noopener noreferrer">LibreOffice Dictionaries</a>
+          <span>·</span>
+          <a href="https://github.com/davidak/wortliste" target="_blank" rel="noopener noreferrer">davidak/wortliste</a>
+          <span>·</span>
+          <a href="https://github.com/hermitdave/FrequencyWords" target="_blank" rel="noopener noreferrer">FrequencyWords</a>
+          <span>·</span>
+          <a href="https://github.com/k2-fsa/sherpa-onnx" target="_blank" rel="noopener noreferrer">Sherpa-ONNX</a>
+        </div>
+        <div class="dict-source-wrap">
+          <label id="dict-source-label" class="dict-source-label" for="dict-base-url-input">Dictionary Pack URL (optional)</label>
+          <div class="dict-source-row">
+            <input id="dict-base-url-input" class="dict-source-input" type="url" placeholder="https://celebornart.github.io/Lexory/dictionaries/" />
+            <button id="dict-base-url-save-btn" class="dict-btn" type="button">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dictionaries/manifest.js"></script>
+  <script src="i18n.js"></script>
+  <script src="db.js"></script>
+  <script src="voice.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
